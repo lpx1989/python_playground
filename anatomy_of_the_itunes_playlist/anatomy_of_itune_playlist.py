@@ -100,6 +100,15 @@ def plotStats(fileName):
 		print("No valid Album Rating/Total Time data in %s." % fileName)
 		return
 
+	# scatter plot
+	x = np.array(durations, np.int32)
+	# convert to minutes
+	x = x/60000.0
+	y = np.array(ratings, np.int32)
+	pyplot.subplot(2, 1, 1)
+	pyplot.plot(x, y, 'o')
+	# To do...
+
 
 
 def main():
@@ -108,3 +117,29 @@ def main():
 	This program analyzes playlist files(.xml) exported from Itunes.
 	"""
 	parser = argparse.ArgumentParser(description=descStr)
+	# add a mutually exclusive group of arguments
+	group = parser.add_mutually_exclusive_group()
+
+	# add expected arguments
+	group.add_argument('--common', nargs='*', dest='plFiles', required=False)
+	group.add_argument('--stats', dest='plFiles', required=False)
+	group.add_argument('--dup', dest='plFiles', required=False)
+
+	# parse args
+	args = parser.parse_args()
+
+	if args.plFiles:
+		# find common tracks
+		findCommonTracks(args.plFiles)
+	elif args.plFiles:
+		# plot stats
+		plotStats(args.plFiles)
+	elif args.plFileD:
+		# find duplicate tracks
+		findDuplicates(args.plFileD)
+	else:
+		print("These are not the tracks you are looking for.")
+
+
+
+
