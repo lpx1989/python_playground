@@ -1,2 +1,3 @@
-# python_playground
-Just a Python playground
+# Python playground
+
+It is a Python ground used for practice my Python skills
